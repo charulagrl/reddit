@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 class DataStore(object):
 	def __init__(self):
 		self.topics = {}

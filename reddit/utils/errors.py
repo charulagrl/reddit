@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from flask import Response
-from reddit.app import app
 import traceback
 import json
 
@@ -18,7 +17,7 @@ def internal_error(error):
 
 def not_found(error):
     return Response(
-        response=json.dumps({'error': 'not_found'}),
+        response=json.dumps({'error': error}),
         status=404,
         mimetype='application/json',
     )

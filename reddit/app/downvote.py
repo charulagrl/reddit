@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-from flask import url_for, request, redirect, Response
-from reddit.utils.util import create_downvote
-from reddit.app.errors import bad_request
-from reddit.app import app, datastore
+from flask import request, Response
+from reddit.controller.downvote import create_downvote
+from reddit.app import app
 import json
 
 @app.route('/downvote', methods = ['POST'])
