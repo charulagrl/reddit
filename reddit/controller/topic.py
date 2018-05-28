@@ -9,7 +9,7 @@ from reddit.app import datastore
 from reddit.utils.errors import internal_error
 from reddit.utils.errors import not_found
 from reddit.utils.errors import bad_request
-from reddit.utils.success import success_response
+from reddit.utils.success import success_response, success_list_response
 
 import uuid
 import json
@@ -48,3 +48,13 @@ def get_topic(topic_id):
 		return not_found("Topic with id %s does not exist"%topic_id)
 
 	return success_response(topic)
+
+def get_all_topics():
+	topics = [datastore.topics[topic].__dict__ for topic in datastore.topics.keys()]
+
+	for topic in topics:
+		topic["upvotes"] = datastore.upvotes[topic['id']].upvotes
+		topic["downvotes"] = datastore.downvotes[topic['id']].downvotes
+
+	return success_list_response(topics)
+

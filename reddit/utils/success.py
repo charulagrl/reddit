@@ -10,3 +10,10 @@ def success_response(ob):
 		status=200,
 		mimetype='application/json'
 	)
+
+def success_list_response(response_list):
+	return Response(
+		response=json.dumps(response_list),
+		status=200,
+		mimetype='application/json'
+	)
