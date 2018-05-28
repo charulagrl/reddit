@@ -1,19 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from reddit.app import app
-from flask import url_for, request, redirect
+from flask import url_for, request, redirect, Response
 from reddit.utils.util import create_topic
-from reddit.app import datastore
-
+from reddit.app import app, datastore
+import json
 
 @app.route('/topic', methods = ['POST'])
 def topic():
 	if request.method == 'POST':
-		content = request.json['content']
+		response = create_topic(request.json)
 
-		topic = create_topic(content)
-
-		return str(topic)
+		return response
 
 @app.route('/list/topics')
 def all_topics():

@@ -4,5 +4,6 @@ from flask import url_for, request, redirect
 
 @app.route('/')
 @app.route('/index')
+@app.route('/index/')
 def index():
     return "Hello, World!"
