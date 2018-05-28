@@ -15,3 +15,12 @@ def create_topic(content):
 	datastore.downvotes[new_id] = 0
 
 	return topic
+
+def create_upvote(topic_id):
+	topic = datastore.topics.get(topic_id, None)
+	print topic
+
+	if topic:
+		datastore.upvotes[topic_id] += 1
+
+	return datastore.upvotes[topic_id]
