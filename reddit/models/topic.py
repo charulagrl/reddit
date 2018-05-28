@@ -12,5 +12,5 @@ class Topic(object):
 		return self.content
 
 	def __str__(self):
-		return "topic_id " + self.id + " content " + self.content
+		return "topic_id is " + self.id + " and content is " + self.content
 
