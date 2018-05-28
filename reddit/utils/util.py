@@ -18,9 +18,16 @@ def create_topic(content):
 
 def create_upvote(topic_id):
 	topic = datastore.topics.get(topic_id, None)
-	print topic
 
 	if topic:
 		datastore.upvotes[topic_id] += 1
 
 	return datastore.upvotes[topic_id]
+
+def create_downvote(topic_id):
+	topic = datastore.topics.get(topic_id, None)
+
+	if topic:
+		datastore.downvotes[topic_id] += 1
+
+	return datastore.downvotes[topic_id]

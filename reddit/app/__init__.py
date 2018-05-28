@@ -8,3 +8,4 @@ datastore = DataStore()
 from reddit.app import index
 from reddit.app import topic
 from reddit.app import upvote
+from reddit.app import downvote
