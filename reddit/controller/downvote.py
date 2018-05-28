@@ -15,16 +15,20 @@ import uuid
 import json
 
 def create_downvote(request_data):
-	if not request_data.get('topic_id', None):
-		return bad_request("Topic id is missing")
+	try:
+		if not request_data.get('topic_id', None):
+			return bad_request("Topic id is missing")
 
-	topic_id = request_data['topic_id']
-	topic = datastore.topics.get(topic_id, None)
+		topic_id = request_data['topic_id']
+		topic = datastore.topics.get(topic_id, None)
 
-	if not topic:
-		return not_found("Topic with id %s does not exist"%topic_id)
+		if not topic:
+			return not_found("Topic with id %s does not exist"%topic_id)
 
-	downvote_ob = datastore.downvotes[topic_id]
-	downvote_ob.downvotes += 1
+		downvote_ob = datastore.downvotes[topic_id]
+		downvote_ob.downvotes += 1
 
-	return success_response(downvote_ob)
+		return success_response(downvote_ob)
+
+	except Exception as e:
+		return internal_error("Some unexpected error has occured.")

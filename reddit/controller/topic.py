@@ -15,23 +15,26 @@ import uuid
 import json
 
 def create_topic(request_data):
-	if not request_data.get('content', None):
-		return bad_request("Content is missing")
+	try:
+		if not request_data.get('content', None):
+			return bad_request("Content is missing")
 
-	content = request_data['content']
-	new_id = str(uuid.uuid4())
-	while (datastore.topics.get(new_id, None)):
+		content = request_data['content']
 		new_id = str(uuid.uuid4())
-	
-	topic = Topic(topic_id=new_id, content=content)
-	upvote = Upvote(topic_id=new_id)
-	downvote = Downvote(topic_id=new_id)
+		while (datastore.topics.get(new_id, None)):
+			new_id = str(uuid.uuid4())
 
-	datastore.topics[new_id] = topic
-	datastore.upvotes[new_id] = upvote
-	datastore.downvotes[new_id] = downvote
+		topic = Topic(topic_id=new_id, content=content)
+		upvote = Upvote(topic_id=new_id)
+		downvote = Downvote(topic_id=new_id)
 
-	return success_response(topic)
+		datastore.topics[new_id] = topic
+		datastore.upvotes[new_id] = upvote
+		datastore.downvotes[new_id] = downvote
+
+		return success_response(topic)
+	except Exception as e:
+		return internal_error("Some unexpected error has occured.")
 
 def get_topic(topic_id):
 	topic = datastore.topics.get(topic_id, None)
