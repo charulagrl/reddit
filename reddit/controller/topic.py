@@ -20,6 +20,11 @@ def create_topic(request_data):
 			return bad_request("Content is missing")
 
 		content = request_data['content']
+
+		content_length = len(content)
+		if content_length > 255:
+			return bad_request("Content length is longer than 255 characters")
+
 		new_id = str(uuid.uuid4())
 		while (datastore.topics.get(new_id, None)):
 			new_id = str(uuid.uuid4())
