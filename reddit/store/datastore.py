@@ -5,6 +5,7 @@ class DataStore(object):
 		self.topics = {}
 		self.upvotes = {}
 		self.downvotes = {}
+		self.users = {}
 
 	def get_topic(self, topic_id):
 		topic = self.topics.get(topic_id, None)
@@ -20,3 +21,8 @@ class DataStore(object):
 		downvotes = self.downvotes.get(topic_id, None)
 
 		return downvotes
+
+	def get_user(self, user_id):
+		users = self.users.get(user_id, None)
+
+		return users
