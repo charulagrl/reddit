@@ -5,7 +5,7 @@ from reddit.store import datastore
 from reddit.models.topic import Topic
 from reddit.models.upvote import Upvote
 from reddit.models.downvote import Downvote
-from reddit.app import datastore
+from reddit.app import app, datastore
 from reddit.utils.errors import internal_error
 from reddit.utils.errors import not_found
 from reddit.utils.errors import bad_request
@@ -17,12 +17,14 @@ import json
 def create_topic(request_data):
 	try:
 		if not request_data.get('content', None):
+			app.logger.error("Content is missing")
 			return bad_request("Content is missing")
 
 		content = request_data['content']
 
 		content_length = len(content)
 		if content_length > 255:
+			app.logger.error("Content length is longer than 255 characters")
 			return bad_request("Content length is longer than 255 characters")
 
 		new_id = str(uuid.uuid4())
@@ -39,6 +41,7 @@ def create_topic(request_data):
 
 		return success_response(topic)
 	except Exception as e:
+		app.logger.error("Some unexpected error has occured.")
 		return internal_error("Some unexpected error has occured.")
 
 def get_topic(topic_id):

@@ -17,12 +17,14 @@ import json
 def create_downvote(request_data):
 	try:
 		if not request_data.get('topic_id', None):
+			app.logger.errors("Topic id is missing")
 			return bad_request("Topic id is missing")
 
 		topic_id = request_data['topic_id']
 		topic = datastore.topics.get(topic_id, None)
 
 		if not topic:
+			app.logger.errors("Topic with id %s does not exist"%topic_id)
 			return not_found("Topic with id %s does not exist"%topic_id)
 
 		downvote_ob = datastore.downvotes[topic_id]
@@ -31,4 +33,5 @@ def create_downvote(request_data):
 		return success_response(downvote_ob)
 
 	except Exception as e:
+		app.logger.error("Some unexpected error has occured.")
 		return internal_error("Some unexpected error has occured.")
