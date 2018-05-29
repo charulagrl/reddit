@@ -20,6 +20,10 @@ def create_topic(request_data):
 			app.logger.error("Content is missing")
 			return bad_request("Content is missing")
 
+		if not request_data.get('user_id', None):
+			app.logger.error("User id is missing")
+			return bad_request("User id is missing")
+
 		content = request_data['content']
 
 		content_length = len(content)
@@ -27,11 +31,16 @@ def create_topic(request_data):
 			app.logger.error("Content length is longer than 255 characters")
 			return bad_request("Content length is longer than 255 characters")
 
+		user_id = request_data['user_id']
+		if not datastore.users.get(user_id, None):
+			app.logger.error("Account with user_id %s does not exist"%user_id)
+			return bad_request("Account with user_id %s does not exist"%user_id)
+
 		new_id = str(uuid.uuid4())
 		while (datastore.topics.get(new_id, None)):
 			new_id = str(uuid.uuid4())
 
-		topic = Topic(topic_id=new_id, content=content)
+		topic = Topic(topic_id=new_id, content=content, user_id=user_id)
 		upvote = Upvote(topic_id=new_id)
 		downvote = Downvote(topic_id=new_id)
 

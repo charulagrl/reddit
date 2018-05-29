@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
 class Topic(object):
-	def __init__(self, topic_id, content):
+	def __init__(self, topic_id, content, user_id):
 		self.id = topic_id
 		self.content = content
+		self.user_id = user_id
 
 	def get_topic_id(self):
 		return self.id
