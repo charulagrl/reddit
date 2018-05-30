@@ -12,3 +12,4 @@ from reddit.app import topic
 from reddit.app import upvote
 from reddit.app import downvote
 from reddit.app import user
+from reddit.app import home

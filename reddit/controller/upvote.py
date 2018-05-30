@@ -28,7 +28,7 @@ def create_upvote(request_data):
 		topic = datastore.topics.get(topic_id, None)
 
 		if not topic:
-			app.logger.errors("Topic with id %s does not exist"%topic_id)
+			app.logger.error("Topic with id %s does not exist"%topic_id)
 			return not_found("Topic with id %s does not exist"%topic_id)
 
 		user_id = request_data['user_id']
@@ -38,7 +38,7 @@ def create_upvote(request_data):
 
 		upvote_ob = datastore.upvotes[topic_id]
 		upvote_ob.upvotes += 1
-
+		datastore.top_topics.add_upvote(topic_id, upvote_ob.upvotes)
 		return success_response(upvote_ob)
 
 	except Exception as e:
