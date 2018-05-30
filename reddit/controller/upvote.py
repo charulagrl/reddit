@@ -36,10 +36,8 @@ def create_upvote(request_data):
 			app.logger.error("Account with user_id %s does not exist"%user_id)
 			return bad_request("Account with user_id %s does not exist"%user_id)
 
-		upvote_ob = datastore.upvotes[topic_id]
-		upvote_ob.upvotes += 1
-		datastore.top_topics.add_upvote(topic_id, upvote_ob.upvotes)
-		return success_response(upvote_ob)
+		upvotes = datastore.top_topics.add_upvote(topic_id)
+		return success_dict_response({"topic_id": topic_id, "upvotes": upvotes})
 
 	except Exception as e:
 		app.logger.error("Some unexpected error has occured.")

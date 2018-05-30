@@ -11,7 +11,7 @@ import uuid
 import json
 
 def get_top_topics():
-	topics_counter = datastore.top_topics.get_top_topics()
+	topics_counter = datastore.upvotes.get_top_topics()
 	topics = [datastore.topics[topic_id].__dict__ for (topic_id, counter) in topics_counter]
 
 	for topic in topics:
