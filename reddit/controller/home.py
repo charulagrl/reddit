@@ -15,7 +15,7 @@ def get_top_topics():
 	topics = [datastore.topics[topic_id].__dict__ for (topic_id, counter) in topics_counter]
 
 	for topic in topics:
-		topic["upvotes"] = datastore.upvotes[topic['id']].upvotes
-		topic["downvotes"] = datastore.downvotes[topic['id']].downvotes
+		topic["upvotes"] = datastore.upvotes.counter[topic['id']]
+		topic["downvotes"] = datastore.downvotes.counter[topic['id']]
 
 	return success_list_response(topics)

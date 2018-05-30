@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
 
+from collections import Counter
+
 class Downvote(object):
-	def __init__(self, topic_id):
-		self.id = topic_id
-		self.downvotes = 0
+	def __init__(self):
+		self.counter = Counter()
 
-	def get_topic_id(self):
-		return self.id
+	def add_downvote(self, topic_id):
+		count = self.counter.get(topic_id, None)
+		if count:
+			self.counter[topic_id] += 1
+		else:
+			self.counter[topic_id] = 1
 
-	def get_downvotes(self):
-		return self.downvotes
+		return self.counter[topic_id]
+
+	def get_downvotes(self, topic_id):
+		return self.counter.get(topic_id, None)

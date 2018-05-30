@@ -8,6 +8,7 @@ from reddit.utils.errors import internal_error
 from reddit.utils.errors import not_found
 from reddit.utils.errors import bad_request
 from reddit.utils.success import success_response
+from reddit.utils import error_message
 
 import uuid
 import json
@@ -15,13 +16,14 @@ import json
 def create_user(request_data):
 	try:
 		if not request_data.get('user_id', None):
-			app.logger.error("User_id is missing")
-			return bad_request("User_id is missing")
+			app.logger.error(error_message.USER_ID_MISSING)
+			return bad_request(error_message.USER_ID_MISSING)
 
 		user_id = request_data['user_id']
 
 		if (datastore.users.get(user_id, None)):
-			return bad_request("Account with user id %s already exists"%user_id)
+			app.logger.error(error_message.ACCOUNT_ALREADY_EXISTS%user_id)
+			return bad_request(error_message.ACCOUNT_ALREADY_EXISTS%user_id)
 
 		user = User(user_id=user_id)
 
@@ -29,5 +31,5 @@ def create_user(request_data):
 		return success_response(user)
 	
 	except Exception as e:
-		app.logger.error("Some unexpected error has occured.")
-		return internal_error("Some unexpected error has occured.")
+		app.logger.error(error_message.INTERNAL_ERROR)
+		return internal_error(error_message.INTERNAL_ERROR)

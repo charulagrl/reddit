@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
 from reddit.models.upvote import Upvote
+from reddit.models.downvote import Downvote
+
 
 class DataStore(object):
 	def __init__(self):
 		self.topics = {}
 		self.upvotes = Upvote()
-		self.downvotes = {}
+		self.downvotes = Downvote()
 		self.users = {}
 		# self.top_topics = TopTopics()
 

@@ -17,3 +17,6 @@ class Upvote(object):
 
 	def get_top_topics(self, n=20):
 		return self.counter.most_common(n)
+
+	def get_upvotes(self, topic_id):
+		return self.counter.get(topic_id, None)
