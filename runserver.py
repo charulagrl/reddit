@@ -15,4 +15,5 @@ handler = RotatingFileHandler('service.log', maxBytes=10000, backupCount=1)
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
 
-app.run()
+port = int(os.environ.get("PORT", 33507))
+app.run(host="0.0.0.0", port=port)
