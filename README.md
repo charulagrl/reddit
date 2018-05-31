@@ -10,6 +10,10 @@ pip install -r requirements.txt
 
 python runserver.py
 
+## Run test cases
+
+pytest --setup-show tests/
+
 ## Key features:
 
 * Allow user creation by unique id
@@ -41,14 +45,76 @@ Logs will be generated in a file service.log. For any incorrect output, please c
 
 ### Create user
 
+curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": <userId>}' \
+ 'https://reddit-clone1.herokuapp.com/user'
+
+ e.g.
+
+ curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": "charul"}' \
+ 'https://reddit-clone1.herokuapp.com/user'
 
 ### Create topic
 
+curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": <userId>, "content": <content>}' \
+ 'https://reddit-clone1.herokuapp.com/topic'
+
+e.g.
+curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": "charul", "content": "test"}' \
+ 'https://reddit-clone1.herokuapp.com/topic'
+
 ### Upvote a topic
 
+curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": <userId>, "topic_id": <topicId>}' \
+ 'https://reddit-clone1.herokuapp.com/upvote'
+
+ e.g.
+ curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": "charul", "topic_id": "c213b408-0db3-45f0-905a-52799d1e1312"}' \
+ 'https://reddit-clone1.herokuapp.com/upvote'
 
 ### Downvote a topic
 
+curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": <userId>, "topic_id": <topicId>}' \
+ 'https://reddit-clone1.herokuapp.com/downvote'
+
+ e.g.
+ curl -i -X POST \
+   -H "Content-Type:application/json" \
+   -d \
+'{"user_id": "charul", "topic_id": "c213b408-0db3-45f0-905a-52799d1e1312"}' \
+ 'https://reddit-clone1.herokuapp.com/downvote'
+
 ### Get a topic by id
 
+curl -i -X GET \
+ 'https://reddit-clone1.herokuapp.com/topic/<topicId>'
+
+e.g.
+
+curl -i -X GET \
+ 'https://reddit-clone1.herokuapp.com/topic/c213b408-0db3-45f0-905a-52799d1e1312'
+
 ### Get most upvoted topics
+
+curl -i -X GET \
+ 'https://reddit-clone1.herokuapp.com/home'
