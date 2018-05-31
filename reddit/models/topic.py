@@ -5,7 +5,6 @@ class Topic(object):
 		self.id = topic_id
 		self.content = content
 		self.user_id = user_id
-		print "dacscsd"
 
 	def get_topic_id(self):
 		return self.id
