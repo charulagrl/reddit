@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import request, Response
-from reddit.store import datastore
-from reddit.models.topic import Topic
-from reddit.models.upvote import Upvote
-from reddit.models.downvote import Downvote
+from flask import request
 from reddit.app import app, datastore
 from reddit.utils.errors import internal_error
 from reddit.utils.errors import not_found

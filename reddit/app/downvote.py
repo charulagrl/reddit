@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import request, Response
+from flask import request
 from reddit.controller.downvote import create_downvote
 from reddit.app import app
 import json

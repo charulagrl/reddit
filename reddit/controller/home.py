@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from flask import request
-from reddit.app import app, datastore
+from reddit.app import datastore
 from reddit.utils.errors import internal_error
 from reddit.utils.errors import not_found
 from reddit.utils.errors import bad_request

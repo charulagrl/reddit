@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import request, Response
+from flask import request
 from reddit.store import datastore
-from reddit.models.topic import Topic
-from reddit.models.upvote import Upvote
-from reddit.models.downvote import Downvote
 from reddit.app import app, datastore
+from reddit.models.topic import Topic
 from reddit.utils.errors import internal_error
 from reddit.utils.errors import not_found
 from reddit.utils.errors import bad_request
@@ -35,7 +33,7 @@ def create_topic(request_data):
 		user_id = request_data['user_id']
 		if not datastore.users.get(user_id, None):
 			app.logger.error(error_message.ACCOUNT_DOES_NOT_EXIST%user_id)
-			return bad_request(error_message.ACCOUNT_DOES_NOT_EXIST%user_id)
+			return not_found(error_message.ACCOUNT_DOES_NOT_EXIST%user_id)
 
 		new_id = str(uuid.uuid4())
 		while (datastore.topics.get(new_id, None)):
