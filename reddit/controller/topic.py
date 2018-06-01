@@ -9,6 +9,7 @@ from reddit.utils.errors import not_found
 from reddit.utils.errors import bad_request
 from reddit.utils.success import success_response, success_list_response
 from reddit.utils import error_message
+from reddit.app import datastore
 
 import uuid
 import json
@@ -48,6 +49,19 @@ def create_topic(request_data):
 		app.logger.error(error_message.INTERNAL_ERROR)
 		return internal_error(error_message.INTERNAL_ERROR)
 
+def create_topic_html(form):
+	content = form.content.data
+	user_id = form.user_id.data
+		
+	new_id = str(uuid.uuid4())
+	while (datastore.topics.get(new_id, None)):
+		new_id = str(uuid.uuid4())
+
+	topic = Topic(topic_id=new_id, content=content, user_id=user_id)
+	datastore.topics[new_id] = topic
+
+	return topic
+
 def get_topic(topic_id):
 	topic = datastore.topics.get(topic_id, None)
 
@@ -64,4 +78,3 @@ def get_all_topics():
 		topic["downvotes"] = datastore.downvotes[topic['id']].downvotes
 
 	return success_list_response(topics)
-
