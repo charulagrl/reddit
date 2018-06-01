@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% from "render_field.html" import render_field %}
+<div class="row marketing">
+	<div class="col-md-12">
+		<h3>Create new user</h3>
+		<form action = "/user" method=post >
+			<dl>
+				{{ render_field(form.user_id) }}
+			</dl>
+		<p><input type = "submit" value = "submit" /></p>
+	</form>
+	</div>
+</div>
+{% endblock %}

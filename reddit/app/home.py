@@ -6,7 +6,7 @@ from reddit.controller.home import get_top_topics
 import json
 
 @app.route('/home', methods = ['GET'])
-def top_topics():
+def home():
 	response = get_top_topics()
 
 	return response
