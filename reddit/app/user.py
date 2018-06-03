@@ -32,3 +32,11 @@ def login():
 		user.user_login(form)
 		return render_template("home.html")
 	return render_template('login.html', form=form)
+
+@app.route('/logout', methods = ['POST', 'GET'])
+def logout():
+	if not is_authenticated():
+		return redirect(url_for('login'))
+
+	user.user_logout()
+	return redirect(url_for('login'))

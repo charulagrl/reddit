@@ -9,7 +9,7 @@ from reddit.utils.errors import bad_request
 from reddit.utils.success import success_response
 from reddit.utils import error_message
 from reddit.utils.form import UserForm
-from reddit.utils.current_user import set_current_user
+from reddit.utils import current_user
 from flask import request
 
 import uuid
@@ -19,7 +19,7 @@ def create_user_internal(user_id):
 	'''Creates new user object given user_id'''
 	user = User(user_id=user_id)
 	datastore.users[user_id] = user
-	set_current_user(user)
+	current_user.set_current_user(user)
 	return user
 
 def create_user_html(form):
@@ -48,7 +48,10 @@ def create_user_json(request):
 		app.logger.error(error_message.INTERNAL_ERROR)
 		return internal_error(error_message.INTERNAL_ERROR)
 
-def user_login():
+def user_login(form):
 	user_id = form.user_id.data
 	user = datastore.get_user(user_id)
-	set_current_user(user)
+	current_user.set_current_user(user)
+
+def user_logout():
+	current_user.unset_current_user()

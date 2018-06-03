@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from reddit.utils.success import success_response, success_list_response
+from reddit.utils.success import success_dict_response, success_list_response
 from reddit.utils.request_type import request_wants_html
 from reddit.utils.form import TopicForm, UpvoteForm
 from reddit.utils.current_user import is_authenticated
@@ -32,7 +32,7 @@ def get_topic(topic_id):
 	if request_wants_html():
 		return render_template('single_topic.html', topic=topic_ob, form=form)
 	else:
-		return success_response(topic_ob)
+		return success_dict_response(topic_ob)
 
 @app.route('/list/topics')
 def all_topics():

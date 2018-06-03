@@ -46,22 +46,25 @@ Logs will be generated in a file service.log. For any incorrect output, please c
 ### Create user
 
 curl -i -X POST \
+   -H "Accept:application/json" \
    -H "Content-Type:application/json" \
    -d \
 '{"user_id": <userId>}' \
- 'https://reddit-clone1.herokuapp.com/user'
+ 'https://reddit-clone1.herokuapp.com/signup'
 
  e.g.
 
  curl -i -X POST \
+   -H "Accept:application/json" \
    -H "Content-Type:application/json" \
    -d \
 '{"user_id": "charul"}' \
- 'https://reddit-clone1.herokuapp.com/user'
+ 'https://reddit-clone1.herokuapp.com/signup'
 
 ### Create topic
 
 curl -i -X POST \
+   -H "Accept:application/json" \
    -H "Content-Type:application/json" \
    -d \
 '{"user_id": <userId>, "content": <content>}' \
@@ -69,6 +72,7 @@ curl -i -X POST \
 
 e.g.
 curl -i -X POST \
+   -H "Accept:application/json" \
    -H "Content-Type:application/json" \
    -d \
 '{"user_id": "charul", "content": "test"}' \
@@ -77,44 +81,51 @@ curl -i -X POST \
 ### Upvote a topic
 
 curl -i -X POST \
-   -H "Content-Type:application/json" \
+   -H "Accept:application/json" \
+   -H "Content-type:application/json" \
    -d \
-'{"user_id": <userId>, "topic_id": <topicId>}' \
- 'https://reddit-clone1.herokuapp.com/upvote'
+'{"user_id": <userId>}' \
+ 'https://reddit-clone1.herokuapp.com/upvote/<topicId>'
 
  e.g.
  curl -i -X POST \
-   -H "Content-Type:application/json" \
+   -H "Accept:application/json" \
+   -H "Content-type:application/json" \
    -d \
-'{"user_id": "charul", "topic_id": "c213b408-0db3-45f0-905a-52799d1e1312"}' \
- 'https://reddit-clone1.herokuapp.com/upvote'
+'{"user_id": "a1"}' \
+ 'https://reddit-clone1.herokuapp.com/upvote/0100de81-b3e2-4785-99d2-29062b699c41'
 
 ### Downvote a topic
 
 curl -i -X POST \
-   -H "Content-Type:application/json" \
+   -H "Accept:application/json" \
+   -H "Content-type:application/json" \
    -d \
-'{"user_id": <userId>, "topic_id": <topicId>}' \
- 'https://reddit-clone1.herokuapp.com/downvote'
+'{"user_id": <userId>}' \
+ 'https://reddit-clone1.herokuapp.com/downvote/<topicId>'
 
  e.g.
  curl -i -X POST \
-   -H "Content-Type:application/json" \
+   -H "Accept:application/json" \
+   -H "Content-type:application/json" \
    -d \
-'{"user_id": "charul", "topic_id": "c213b408-0db3-45f0-905a-52799d1e1312"}' \
- 'https://reddit-clone1.herokuapp.com/downvote'
+'{"user_id": "a1"}' \
+ 'https://reddit-clone1.herokuapp.com/downvote/0100de81-b3e2-4785-99d2-29062b699c41'
 
 ### Get a topic by id
 
 curl -i -X GET \
- 'https://reddit-clone1.herokuapp.com/topic/<topicId>'
+   -H "Accept:application/json" \
+   'https://reddit-clone1.herokuapp.com/topic/<topicId>'
 
 e.g.
 
 curl -i -X GET \
- 'https://reddit-clone1.herokuapp.com/topic/c213b408-0db3-45f0-905a-52799d1e1312'
+   -H "Accept:application/json" \
+   'https://reddit-clone1.herokuapp.com/topic/c213b408-0db3-45f0-905a-52799d1e1312'
 
 ### Get most upvoted topics
 
 curl -i -X GET \
- 'https://reddit-clone1.herokuapp.com/home'
+   -H "Accept:application/json" \
+   'https://reddit-clone1.herokuapp.com/home'
