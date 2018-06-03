@@ -8,9 +8,9 @@ from wtforms.validators import ValidationError
 
 
 class UserForm(Form):
-    user_id= TextField('user_id', validators=[validators.Required(), validators.Length(min=4, max=25)])
+	user_id= TextField('user_id', validators=[validators.Required(), validators.Length(min=4, max=25)])
 
-    def validate_user_id(form, field):
+	def validate_user_id(form, field):
 		if datastore.users.get(form.user_id.data, None):
 			raise ValidationError(error_message.ACCOUNT_ALREADY_EXISTS%form.user_id.data)
 
