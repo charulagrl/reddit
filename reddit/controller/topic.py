@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from reddit.utils.success import success_response, success_list_response
+from reddit.utils.success import success_response, success_list_response, success_dict_response
 from reddit.utils.errors import internal_error, not_found, bad_request
 from reddit.utils.request_type import request_wants_html
 from reddit.app import app, datastore
@@ -74,7 +74,7 @@ def get_topic(topic_id):
 		if not topic:
 			return not_found(error_message.TOPIC_DOES_NOT_EXIST)
 
-		return success_response(topic)
+		return topic
 
 def get_all_topics():
 	'''Return all the topics'''
