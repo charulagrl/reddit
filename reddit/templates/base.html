@@ -4,7 +4,6 @@
     <title>Reddit</title>
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/css/reddit.css" rel="stylesheet">
     <style type="text/css">
       body {
           padding-top: 20px;
@@ -96,10 +95,10 @@
         </div>
         <ul class="nav nav-tabs" role="tablist">
           <li><a href="{{ url_for('home') }}">home</a></li>
-          <li><a href="{{ url_for('create_user') }}">user</a></li>
           <li><a href="{{ url_for('create_topic') }}">topic</a></li>
-          <li><a href="https://github.com/charulagrl/reddit">source</a></li>
-          <li><a href="https://github.com/charulagrl/reddit/issues">issues</a></li>
+          <li><a href="{{ url_for('all_topics') }}">all_topics</a></li>
+          <li><a href="{{ url_for('login') }}">login</a></li>
+          <li><a href="{{ url_for('signup') }}">signup</a></li>
         </ul>
       </br></br>
       {% block content %}{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row marketing">
+    <div class="col-md-12">
+        <p>User <b>{{topic.user_id}}</b> wrote:</p>
+        <p><b>Content:</b></p>
+        <p>{{topic.content}}</p>
+        <p>{{topic.upvotes}} Upvotes <a href="{{ url_for('upvote', topic_id=topic['id']) }}">Upvote</a></p>
+        <p>{{topic.downvotes}} Downvotes <a href="{{ url_for('downvote', topic_id=topic['id']) }}">Downvote</a></p>
+    </div>
+</div>
+
+{% endblock %}

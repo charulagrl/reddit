@@ -1,12 +1,17 @@
 # -*- coding: utf-8 -*-
 
-from reddit.app import app
-from flask import request
+from reddit.utils.request_type import request_wants_html
+from reddit.utils.success import success_list_response
 from reddit.controller.home import get_top_topics
+from flask import request, render_template
+from reddit.app import app
 import json
 
 @app.route('/home', methods = ['GET'])
 def home():
-	response = get_top_topics()
+	topics = get_top_topics()
 
-	return response
+	if request_wants_html():
+		return render_template('home.html', topics=topics)
+	else:
+		return success_list_response(topics)

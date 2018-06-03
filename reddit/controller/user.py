@@ -9,20 +9,27 @@ from reddit.utils.errors import bad_request
 from reddit.utils.success import success_response
 from reddit.utils import error_message
 from reddit.utils.form import UserForm
+from reddit.utils.current_user import set_current_user
 from flask import request
 
 import uuid
 import json
 
-def create_user_html(form):
-	'''Create user when Accept type is text/html'''
-	user_id = form.user_id.data
+def create_user_internal(user_id):
+	'''Creates new user object given user_id'''
 	user = User(user_id=user_id)
 	datastore.users[user_id] = user
+	set_current_user(user)
 	return user
 
-def create_user(request):
-	'''Create user when Accept type is application/json'''
+def create_user_html(form):
+	'''Creates user when Accept type is text/html'''
+	user_id = form.user_id.data
+	user = create_user_internal(user_id)
+	return user
+
+def create_user_json(request):
+	'''Creates user when Accept type is application/json'''
 	try:
 		if not request.json.get('user_id', None):
 			app.logger.error(error_message.USER_ID_MISSING)
@@ -34,11 +41,14 @@ def create_user(request):
 			app.logger.error(error_message.ACCOUNT_ALREADY_EXISTS%user_id)
 			return bad_request(error_message.ACCOUNT_ALREADY_EXISTS%user_id)
 
-		user = User(user_id=user_id)
-
-		datastore.users[user_id] = user
+		user = create_user_internal(user_id)
 		return success_response(user)
 	
 	except Exception as e:
 		app.logger.error(error_message.INTERNAL_ERROR)
 		return internal_error(error_message.INTERNAL_ERROR)
+
+def user_login():
+	user_id = form.user_id.data
+	user = datastore.get_user(user_id)
+	set_current_user(user)

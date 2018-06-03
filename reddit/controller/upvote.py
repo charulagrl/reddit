@@ -11,9 +11,9 @@ from reddit.utils import error_message
 import uuid
 import json
 
-def create_upvote(request_data):
+def create_upvote_json(request_data, topic_id):
 	try:
-		if not request_data.get('topic_id', None):
+		if not topic_id:
 			app.logger.error(error_message.TOPIC_ID_MISSING)
 			return bad_request(error_message.TOPIC_ID_MISSING)
 
@@ -21,7 +21,6 @@ def create_upvote(request_data):
 			app.logger.error(error_message.USER_ID_MISSING)
 			return bad_request(error_message.USER_ID_MISSING)
 
-		topic_id = request_data['topic_id']
 		topic = datastore.topics.get(topic_id, None)
 
 		if not topic:
@@ -39,3 +38,7 @@ def create_upvote(request_data):
 	except Exception as e:
 		app.logger.error(error_message.INTERNAL_ERROR)
 		return internal_error(error_message.INTERNAL_ERROR)
+
+def create_upvote_html(topic_id):
+	upvotes = datastore.upvotes.add_upvote(topic_id)
+	return upvotes

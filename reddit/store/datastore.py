@@ -10,10 +10,14 @@ class DataStore(object):
 		self.upvotes = Upvote()
 		self.downvotes = Downvote()
 		self.users = {}
-		# self.top_topics = TopTopics()
+		self.current_user = None
 
 	def get_topic(self, topic_id):
 		topic = self.topics.get(topic_id, None)
+		if topic:
+			topic = topic.__dict__
+			topic["upvotes"] = self.upvotes.get_upvotes(topic['id'])
+			topic["downvotes"] = self.downvotes.get_downvotes(topic['id'])
 
 		return topic
 
@@ -31,3 +35,12 @@ class DataStore(object):
 		users = self.users.get(user_id, None)
 
 		return users
+
+	def get_all_topics(self):
+		topics = [self.topics[topic].__dict__ for topic in self.topics.keys()]
+
+		for topic in topics:
+			topic["upvotes"] = self.upvotes.get_upvotes(topic['id'])
+			topic["downvotes"] = self.downvotes.get_downvotes(topic['id'])
+
+		return topics

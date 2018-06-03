@@ -15,6 +15,9 @@ class Upvote(object):
 
 		return self.counter[topic_id]
 
+	def create_upvote(self, topic_id):
+		self.counter[topic_id] = 0
+
 	def get_top_topics(self, n=20):
 		return self.counter.most_common(n)
 

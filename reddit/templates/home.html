@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+	<h2>Topics sorted by upvotes</h2>
+	{% for dict in topics %}
+		<div style="border-bottom: 1px solid #000; padding: 10px">
+			<a style="text-decoration:none;font-weight:bold;background-color:#ddd;" href="{{ url_for('get_topic', topic_id=dict['id']) }}">
+				<h4>{{dict['user_id']}} wrote:</h4>
+				<p>{{dict['content']}}</p>
+			</a>
+			<p>{{dict.upvotes}} Upvotes <a href="{{ url_for('upvote', topic_id=dict['id']) }}">Upvote</a></p>
+			<p>{{dict.downvotes}} Downvotes <a href="{{ url_for('downvote', topic_id=dict['id']) }}">Downvote</a></p>
+		</div>
+	{% endfor %}
+{% endblock %}

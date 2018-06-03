@@ -15,5 +15,8 @@ class Downvote(object):
 
 		return self.counter[topic_id]
 
+	def create_downvote(self, topic_id):
+		self.counter[topic_id] = 0
+
 	def get_downvotes(self, topic_id):
 		return self.counter.get(topic_id, None)

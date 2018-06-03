@@ -1,20 +1,26 @@
 # -*- coding: utf-8 -*-
-
-from flask import request
-from reddit.store import datastore
+from reddit.utils.success import success_response, success_list_response
+from reddit.utils.errors import internal_error, not_found, bad_request
+from reddit.utils.request_type import request_wants_html
 from reddit.app import app, datastore
 from reddit.models.topic import Topic
-from reddit.utils.errors import internal_error
-from reddit.utils.errors import not_found
-from reddit.utils.errors import bad_request
-from reddit.utils.success import success_response, success_list_response
 from reddit.utils import error_message
-from reddit.app import datastore
+from flask import request
 
 import uuid
 import json
 
-def create_topic(request_data):
+def create_topic_internal(topic_id, user_id, content):
+	'''Creates new topic object given user_id, topic_id, content'''
+	topic = Topic(topic_id=topic_id, content=content, user_id=user_id)
+
+	datastore.topics[topic_id] = topic
+	datastore.upvotes.create_upvote(topic_id)
+	datastore.downvotes.create_downvote(topic_id)
+	return topic
+
+def create_topic_json(request_data):
+	'''Creates topic when Accept type is application/json'''
 	try:
 		if not request_data.get('content', None):
 			app.logger.error(error_message.CONTENT_MISSING)
@@ -40,41 +46,41 @@ def create_topic(request_data):
 		while (datastore.topics.get(new_id, None)):
 			new_id = str(uuid.uuid4())
 
-		topic = Topic(topic_id=new_id, content=content, user_id=user_id)
-
-		datastore.topics[new_id] = topic
-
+		topic = create_topic_internal(new_id, user_id, content)
 		return success_response(topic)
+
 	except Exception as e:
 		app.logger.error(error_message.INTERNAL_ERROR)
 		return internal_error(error_message.INTERNAL_ERROR)
 
 def create_topic_html(form):
+	'''Creates topic when Accept type is text/html'''
 	content = form.content.data
-	user_id = form.user_id.data
+	user_id = datastore.current_user.user_id
 		
 	new_id = str(uuid.uuid4())
 	while (datastore.topics.get(new_id, None)):
 		new_id = str(uuid.uuid4())
 
-	topic = Topic(topic_id=new_id, content=content, user_id=user_id)
-	datastore.topics[new_id] = topic
-
+	topic = create_topic_internal(new_id, user_id, content)
 	return topic
 
 def get_topic(topic_id):
-	topic = datastore.topics.get(topic_id, None)
+	'''Get topic by topic_id'''
+	topic = datastore.get_topic(topic_id)
+	if request_wants_html():
+		return topic
+	else:
+		if not topic:
+			return not_found(error_message.TOPIC_DOES_NOT_EXIST)
 
-	if not topic:
-		return not_found(error_message.TOPIC_DOES_NOT_EXIST)
-
-	return success_response(topic)
+		return success_response(topic)
 
 def get_all_topics():
-	topics = [datastore.topics[topic].__dict__ for topic in datastore.topics.keys()]
+	'''Return all the topics'''
+	topics = datastore.get_all_topics()
 
-	for topic in topics:
-		topic["upvotes"] = datastore.upvotes[topic['id']].upvotes
-		topic["downvotes"] = datastore.downvotes[topic['id']].downvotes
-
-	return success_list_response(topics)
+	if request_wants_html():
+		return topics
+	else:
+		return success_list_response(topics)
