@@ -20,7 +20,7 @@ def signup():
 
 		return render_template('signup.html', form=form)
 	else:
-		return user.create_user(request)
+		return user.create_user_json(request)
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
