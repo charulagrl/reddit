@@ -41,6 +41,13 @@ Logs will be generated in a file service.log. For any incorrect output, please c
 * Upvotes and downvotes are stored separately using Counter which keeps the count of upvotes/downvotes against topic_id.
 * Top 20 topics are displayed using Counter inbuilt function most_common.
 
+## UI Design
+* The user should login/signup first before creating a topic/upvote/downvote.
+* Logout user will be redirected to login page if they go to login/upvote/downvote/signout page.
+* Only user_id is required for signup/login page.
+* Home page displays all the topics sorted by upvotes.
+* All topics page displays all the topics.
+
 ## Curl Requests:
 
 ### Create user
