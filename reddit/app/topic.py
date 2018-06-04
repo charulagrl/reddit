@@ -2,7 +2,7 @@
 
 from reddit.utils.success import success_dict_response, success_list_response
 from reddit.utils.request_type import request_wants_html
-from reddit.utils.form import TopicForm, UpvoteForm
+from reddit.utils.form import TopicForm
 from reddit.utils.current_user import is_authenticated
 from flask import request, render_template, flash, redirect, url_for
 from reddit.controller import topic
@@ -28,9 +28,8 @@ def create_topic():
 @app.route('/topic/<topic_id>')
 def get_topic(topic_id):
 	topic_ob = topic.get_topic(topic_id)
-	form = UpvoteForm(request.form)
 	if request_wants_html():
-		return render_template('single_topic.html', topic=topic_ob, form=form)
+		return render_template('single_topic.html', topic=topic_ob)
 	else:
 		return success_dict_response(topic_ob)
 

@@ -30,7 +30,7 @@ def login():
 	form = LoginForm(request.form)
 	if request.method == 'POST' and form.validate():
 		user.user_login(form)
-		return render_template("home.html")
+		return redirect(url_for("home"))
 	return render_template('login.html', form=form)
 
 @app.route('/logout', methods = ['POST', 'GET'])
