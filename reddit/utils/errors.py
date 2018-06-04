@@ -17,7 +17,7 @@ def internal_error(error):
 
 def not_found(error):
     return Response(
-        response=json.dumps({'error': error}),
+        response=json.dumps({'error': str(error)}),
         status=404,
         mimetype='application/json',
     )

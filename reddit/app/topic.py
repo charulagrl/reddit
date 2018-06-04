@@ -27,11 +27,11 @@ def create_topic():
 
 @app.route('/topic/<topic_id>')
 def get_topic(topic_id):
-	topic_ob = topic.get_topic(topic_id)
+	response = topic.get_topic(topic_id)
 	if request_wants_html():
-		return render_template('single_topic.html', topic=topic_ob)
+		return render_template('single_topic.html', topic=response)
 	else:
-		return success_dict_response(topic_ob)
+		return response
 
 @app.route('/list/topics')
 def all_topics():

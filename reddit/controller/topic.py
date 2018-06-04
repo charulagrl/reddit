@@ -72,9 +72,9 @@ def get_topic(topic_id):
 		return topic
 	else:
 		if not topic:
-			return not_found(error_message.TOPIC_DOES_NOT_EXIST)
+			return not_found(error_message.TOPIC_DOES_NOT_EXIST%topic_id)
 
-		return topic
+		return success_dict_response(topic)
 
 def get_all_topics():
 	'''Return all the topics'''
